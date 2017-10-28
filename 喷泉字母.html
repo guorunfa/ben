@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Title</title>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+      }
+   </style> 
+</head>
+<body>
+<canvas id="canvas">
+</canvas>
+<script>
+
+  var Canvas = {};
+  //字母爆炸
+  Canvas.grf = {
+    init: function () {
+      var canvas = document.querySelector('#canvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      this.ctx = canvas.getContext('2d');
+      this.cw = canvas.width;
+      this.ch = canvas.height - 10;
+      this.particales = [];
+      // this.letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+     this.letter = "宝宝老婆我爱你生日快乐对不起";
+
+    },
+    render: function () {
+     var particale = {
+        x: this.cw / 2,
+        y: this.ch,
+        character:
+          this.letter[Math.floor(Math.random() * this.letter.length)],
+        xSpeed: (Math.random() * 20 - 10),
+        ySpeed: (Math.random() * 20 - 10),
+      };
+      this.particales.push(particale);
+      this.drawparticales();
+//      console.log(particale);
+    },
+    drawparticales: function () {
+      this.fadeCanvas();
+      var particalCount = this.particales.length;
+      for (var i = 0; i < particalCount; i++) {
+        var particale = this.particales[i];
+//        console.log(particale);
+        this.ctx.font = '18px 微软雅黑';
+        this.ctx.fillStyle = "hotpink";
+        this.ctx.fillText(particale.character, particale.x, particale.y);
+        console.log(particale.character);
+        particale.x += particale.xSpeed;
+        particale.y += particale.ySpeed;
+        particale.y *= 0.98;
+      }
+
+    },
+    fadeCanvas:function () {
+      this.ctx.fillStyle='rgba(0,0,0,.5)';
+     this.ctx.fillRect(0,0,this.cw,this.ch);
+    }
+  };
+  Canvas.grf.init();
+  Canvas.grf.render();
+
+  setInterval(function () {
+    Canvas.grf.render();
+
+  }, 120)
+</script>
+
+</body>
+</html>
